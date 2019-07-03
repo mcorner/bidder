@@ -47,6 +47,7 @@ public class PixelClickConvertLog {
     public String tid;
     /** The deviceid, if present */
     public String deviceid;
+    public String ipaddress;
 
     public static final int PIXEL = 0;
     public static final int CLICK = 1;
@@ -64,6 +65,10 @@ public class PixelClickConvertLog {
      */
     public PixelClickConvertLog() {
 
+    }
+
+    public void setIpAddress(String ip){
+      ipaddress = ip;
     }
 
     /**
@@ -158,7 +163,7 @@ public class PixelClickConvertLog {
                                 price = 0;
                             }
                         } else if (exchange.equals(AdxBidRequest.ADX)) {
-                        	 try {                    
+                        	 try {
 								price = AdxWinObject.decrypt(items[1], System.currentTimeMillis());
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
@@ -264,7 +269,7 @@ public class PixelClickConvertLog {
             } catch (Exception error) {
                 error.printStackTrace();
             }
-        } 
+        }
     }
 
     /**
