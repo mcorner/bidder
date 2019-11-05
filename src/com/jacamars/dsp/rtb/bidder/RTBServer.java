@@ -1270,8 +1270,13 @@ class Handler extends AbstractHandler {
                     RTBServer.totalBidTime.addAndGet(time);
                     RTBServer.bidCountWindow.incrementAndGet();
                     response.setStatus(code);
-                    if (bresp != null)
+                    if (bresp != null){
+                      if (request.getHeader("Accept-Encoding") != null && request.getHeader("Accept-Encoding").contains("gzip")) {
+                        sendResponse(response, bresp.getResponseString());
+                      } else {
                         bresp.writeTo(response);
+                      }
+                    }
                 } else {
                     RTBServer.totalNoBidTime.addAndGet(time);
                     RTBServer.nobidCountWindow.incrementAndGet();
