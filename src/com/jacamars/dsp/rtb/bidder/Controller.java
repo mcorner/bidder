@@ -986,7 +986,7 @@ public enum Controller {
      */
 
     public boolean sendRequest(BidRequest br, boolean override) throws Exception {
-   
+
     	if (br.notABidRequest())
             return false;
 
@@ -1106,10 +1106,11 @@ public enum Controller {
      * @param target String. The URI of this pixel data
      * @param uid String. The uid of the pixel.
      */
-    public void publishPixel(String target, String uid) {
+    public void publishPixel(String target, String uid, String ipaddress) {
         if (pixelsQueue != null) {
             PixelClickConvertLog log = new PixelClickConvertLog();
             log.create(target);
+            log.setIpAddress(ipaddress);
             log.type = log.PIXEL;
             log.uid = uid;
             log.handleFakeWin();
@@ -1188,7 +1189,7 @@ public enum Controller {
                 map.put(ExpireKeys.getInstance().getSpecKey(i), f.capKey);
                 map.put(ExpireKeys.getInstance().getExpireKey(i), f.capTimeout);
                 map.put(ExpireKeys.getInstance().getTimeUnitKey(i), f.capTimeUnit);
-                
+
                 /* try {
 					System.out.println("*** F:" + DbTools.mapper.writeValueAsString(map));
 				} catch (JsonProcessingException e) {
@@ -1319,7 +1320,7 @@ class CommandLoop implements com.jacamars.dsp.rtb.jmq.MessageListener<Object> {
     Configuration config = Configuration.getInstance();
 
     long time = 0;
-    
+
     /** Keep a queue of ids of commands so we can block duplicates sent in error */
     List<String> repeats = new ArrayList();
 
@@ -1546,7 +1547,7 @@ class CommandLoop implements com.jacamars.dsp.rtb.jmq.MessageListener<Object> {
                     try {
                         String list = "";
                         for (Campaign c : Configuration.getInstance().getCampaignsListReal()) {
-                            if (c != null) 
+                            if (c != null)
                             	list += c.adId + " ";
                         }
                         BasicCommand cmd = new ListCampaignsResponse(item.from, Configuration.instanceName, list);
@@ -1652,4 +1653,3 @@ class CommandLoop implements com.jacamars.dsp.rtb.jmq.MessageListener<Object> {
 
     }
 }
-
